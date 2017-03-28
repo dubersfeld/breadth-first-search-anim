@@ -69,18 +69,14 @@ public class BFSController {
 		
 		HttpSession session = request.getSession();
 		BFSGraph graph = (BFSGraph)session.getAttribute("graph");
-				
-		System.out.println("search sator");
-		
+					
 		// snapshots for display
 		List<JSONSnapshot> snapshots = new ArrayList<>();
 				
 		while (!graph.isFinished()) {
-			System.out.println("search while begin");
 			graph.searchStep();
 			JSONSnapshot snapshot = graphServices.graphToJSON(graph);
 			//snapshot.displayAdj();
-			System.out.println("search while ");
 			snapshots.add(snapshot);
 			
 		}// while
