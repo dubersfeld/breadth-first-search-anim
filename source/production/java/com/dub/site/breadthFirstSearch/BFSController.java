@@ -3,6 +3,7 @@ package com.dub.site.breadthFirstSearch;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,9 @@ import com.dub.config.annotation.WebController;
 
 @WebController
 public class BFSController {
+	
+	@Inject
+	private GraphServices graphServices;
 	
 	/** Initialize graph for both automatic and stepwise search */
 	@RequestMapping(value="initGraph")
@@ -30,24 +34,9 @@ public class BFSController {
 		if (session.getAttribute("graph") != null) {
 			session.removeAttribute("graph");
 		}
-	
-		BFSGraph graph = new BFSGraph();
-			
-		for (int i = 0; i < jsonVertices.size(); i++) {
-			BFSVertex v = new BFSVertex();
-			v.setName(jsonVertices.get(i).getName());
-			v.setColor(BFSVertex.Color.BLACK);
-			graph.getVertices().add(v);
-		}
 		
-		for (int i = 0; i < jsonEdges.size(); i++) {
-			int from = jsonEdges.get(i).getFrom();
-			int to = jsonEdges.get(i).getTo();
-			Vertex v1 = graph.getVertices().get(from);
-			//Vertex v2 = graph.getVertices().get(to);
-			v1.getAdjacency().add(to);
-		}
-	
+		BFSGraph graph = graphServices.jsonToBFS(jsonEdges, jsonVertices);
+			
 	
 		session.setAttribute("graph", graph);
 			
@@ -62,12 +51,14 @@ public class BFSController {
 		graph.searchInit(sourcename);
 	
 		// here the graph is ready for the search loop
+		
+		graph.display();
 	
 		System.out.println("initGraph completed: " + graph.isInit());
 			
 		return bfsResponse;
 	}
-	
+
 	
 	@RequestMapping(value="searchGraph")
 	@ResponseBody
@@ -79,20 +70,23 @@ public class BFSController {
 		HttpSession session = request.getSession();
 		BFSGraph graph = (BFSGraph)session.getAttribute("graph");
 				
-		System.out.println("searchGraph sator");
+		System.out.println("search sator");
 		
 		// snapshots for display
-		List<StepResult> snapshots = new ArrayList<>();
-		
-		
-		graph.search(snapshots);// search loop affects a List of container
-		
-		System.out.println("after search loop " + snapshots.size());
+		List<JSONSnapshot> snapshots = new ArrayList<>();
 				
-		bfsResponse.setStatus(BFSResponse.Status.OK);
+		while (!graph.isFinished()) {
+			System.out.println("search while begin");
+			graph.searchStep();
+			JSONSnapshot snapshot = graphServices.graphToJSON(graph);
+			//snapshot.displayAdj();
+			System.out.println("search while ");
+			snapshots.add(snapshot);
+			
+		}// while
+				
 		bfsResponse.setSnapshots(snapshots);
-		
-		snapshots.get(0).getGraph().display();
+		bfsResponse.setStatus(BFSResponse.Status.OK);
 		
 		return bfsResponse;
 	}// searchGraph

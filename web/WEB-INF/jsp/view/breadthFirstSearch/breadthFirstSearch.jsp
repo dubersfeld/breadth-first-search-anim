@@ -310,10 +310,8 @@ function canvasApp() {
 	function animStep() {
 	  	console.log("animStep: " + animIndex);
 	  	if (animIndex < results.length) {
-	  		var stepVertices 
-	 			= results[animIndex]["graph"]["vertices"];
-	  		console.log("stepVertices: " + stepVertices.length);
-	 
+	  		var stepVertices = results[animIndex]["vertices"];
+	  		
 	  		for (var i = 0; i < stepVertices.length; i++) {
 	     
 	      		graph.mV[i].mColor = stepVertices[i].color;// update graph
@@ -336,6 +334,7 @@ function canvasApp() {
   		$('#searchColl').find(':submit')[0].disabled = true;
 		$('#animation').find(':submit')[0].disabled = true;
 	  	animIndex = 0;
+		$('#status').text('Animating...');
 	  	animStep();// start actual animation
   	}
   
@@ -426,6 +425,8 @@ function canvasApp() {
   		// now start actual search
 		message = {"type": "COLLECTION"};
 		console.log(message);
+		
+	 	$('#initColl').find(':submit')[0].disabled = true;
 	
 	 	$.ajax({
 			type : "POST",
