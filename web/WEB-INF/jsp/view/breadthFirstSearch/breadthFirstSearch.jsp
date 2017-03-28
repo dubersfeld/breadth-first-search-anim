@@ -474,47 +474,6 @@ function canvasApp() {
 		}// i
   	}// j
 
-  
-  	function searchStep(graph) {// change this name in the final version
-	  	console.log("debug step begin");
-  
-  	  	message = {"type":"STEP"};// minimal message
-  	  
-	  	$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : '<c:url value="/searchStep" />',
-			data : JSON.stringify(message),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS");
-					
-				if (data["status"] == "STEP") {
-					// data is a StepResult container so we extract the graph attribute
-					var stepVertices = data["graph"]["vertices"];
-					for (var i = 0; i < stepVertices.length; i++) {
-						graph.mV[i].mColor = stepVertices[i].color;// update graph
-						graph.mV[i].mDistance = stepVertices[i].d;
-					}
-					
-					redraw(graph);
-					$('#status').text('Searching...');
-				} else if (data["status"] == "FINISHED") {
-					console.log("Search completed");
-					$('#status').text('Search completed');
-				}
-			},
-			
-			error : function(e) {
-				console.log("ERROR: ", e);
-			},
-			done : function(e) {
-				console.log("DONE");
-			}
-		});
-	  
-  	}
  
   	$("#animation").submit(function(event) { anim(); return false; });
   
