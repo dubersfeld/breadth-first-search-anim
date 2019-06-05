@@ -11,7 +11,7 @@ Then the results collection is used in the animation.
 
 To launch the application run this command in project directory: `mvn spring-boot:run`
 
-When the application has started hit the browser on url: `localhost:8080/breadth-first-search`
+When the application has started open a browser and hit url: `localhost:8080/breadth-first-search`
 
 Here is the screen shot of the final step showing a component:
 
