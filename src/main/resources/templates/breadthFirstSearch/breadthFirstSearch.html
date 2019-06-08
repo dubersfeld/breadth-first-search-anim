@@ -1,27 +1,25 @@
 <!doctype html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+<meta charset="utf-8">
 <title>Breadth First Search</title>
-<link rel="stylesheet" th:href="@{/css/bfsDemo.css}" />     
+<link rel="stylesheet" th:href="@{/css/bfsDemo.css}" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-
 <script type="text/javascript" th:inline="javascript">
-
 "use strict";
 
 var baseUrl = "" + /*[[${baseUrl}]]*/;
 
 var Debugger = function() { };// create  object
-	Debugger.log = function(message) {
-  	try {
-    	console.log(message);
-  	} catch(exception) {
-    	return;
-  	}
+Debugger.log = function(message) {
+	try {
+		console.log(message);
+	} catch(exception) {
+		return;
+	}
 }
 
 
@@ -292,7 +290,7 @@ function canvasApp() {
     	redraw(graph);
     	$('#initColl').find(':submit')[0].disabled = false;
     
-		$('#status').text('Ready to search');
+		$('#status').text('Enter vertex');
  	}// randomize
 
   	function animSpeedChanged(e) {
@@ -359,7 +357,6 @@ function canvasApp() {
 	
 	
 	function initColl() {
-		console.log("initColl");
 		sourcename = $("#initColl input[name='sourcename']").val();
 		console.log("search with source: " + sourcename);
 		$('#searchColl').find(':submit')[0].disabled = true;
@@ -410,7 +407,7 @@ function canvasApp() {
 				console.log("DONE");
 			}
 		});
-  
+		$('#status').text('Ready to search');
 	}// initColl
   	
   	function searchColl() {
@@ -485,38 +482,34 @@ $(document).ready(canvasApp);
 </script>
 </head>
 
-<body>
+<body id="all">
 
-<nav>
-<br>
-<br><br>
-</nav>
-
-<header id="intro">
-<h1>Breadth First Search Demonstration</h1>
-<p>I present here a Java based demonstration of the Breadth First Search algorithm.<br>
+  <header id="intro">
+    <h1>Breadth First Search Demonstration</h1>
+	<p>I present here a Java based demonstration of the Breadth First Search algorithm.<br>
 I follow closely the approach of Cormen in his classical textbook.</p>
-<h2>Explanations</h2>
-<p>The graph edges are randomly initialized. You can select the source vertex by entering its name.
+    <h2>Explanations</h2>
+    <p>The graph edges are randomly initialized. You can select the source vertex by entering its name.
 A single search request is sent to the server that sends back a response containing a collection of all intermediate search step results.<br/>
 The response is used in an automatic animation.<br>
 All newly discovered vertices are colored in green. When the search is completed all connected vertices are blue and the edges that belong to the Breadth First Tree are blue. The distance of each vertex to the source vertex is also displayed.<br>
-The animation speed can be changed at any time using the range control.</p>
-</header>
+The animation speed can be changed at any time using the range control.
+    </p>	
+  </header>
 
-<div id="display">
-  <canvas id="canvas" width="700" height="600">
+  <div id="display">
+    <canvas id="canvas" width="620" height="600">
     Your browser does not support HTML 5 Canvas
-  </canvas>
-<footer>
-<p>Dominique Ubersfeld, Cachan, France</p>
-</footer> 
- 
-</div>
+    </canvas>
+    <footer>
+    <br><br>
+    Dominique Ubersfeld, Cachan, France
+    </footer>
+  </div>
 
-<div id="controls">
-  <div id="sourceselect">
-    <h3>Animation mode</h3>
+  <div id="controls">
+    <div id="sourceselect">
+      <h3>Animation mode</h3>
       <p>Click to start the animation:</p>
       <form name="animation" id="animation">
         <input type="submit" name="source-btn" value="Start">
@@ -545,8 +538,7 @@ The animation speed can be changed at any time using the range control.</p>
     <p id="status"></p>
     </div> 
 
-</div>
+  </div>
 
 </body>
-
 </html>

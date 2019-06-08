@@ -1,4 +1,4 @@
-package com.dub.spring.breadthFirstSearch;
+package com.dub.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dub.spring.breadthFirstSearch.BFSGraph;
+import com.dub.spring.breadthFirstSearch.BFSResponse;
+import com.dub.spring.breadthFirstSearch.GraphInitRequest;
+import com.dub.spring.breadthFirstSearch.GraphServices;
+import com.dub.spring.breadthFirstSearch.JSONEdge;
+import com.dub.spring.breadthFirstSearch.JSONSnapshot;
+import com.dub.spring.breadthFirstSearch.JSONVertex;
+import com.dub.spring.breadthFirstSearch.SearchRequest;
 
 
 @Controller

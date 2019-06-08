@@ -27,7 +27,7 @@ public class StepResult {
 
 
 
-	enum Status {
+	public enum Status {
 		STEP, FINISHED
 	}
 }
